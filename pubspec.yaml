@@ -1,0 +1,30 @@
+name: flutter_rickandmorty
+description: "A new Flutter project."
+publish_to: "none"
+version: 0.1.0
+
+environment:
+  sdk: ">=3.2.6 <4.0.0"
+
+dependencies:
+  cupertino_icons: ^1.0.6
+  flutter:
+    sdk: flutter
+  flutter_bloc: ^8.1.4
+  flutter_offline: ^3.0.1
+  dio: ^5.4.1
+  velocity_x: ^4.1.2
+
+  meta: ^1.10.0
+  bloc: ^8.1.3
+
+dev_dependencies:
+  flutter_lints: ^3.0.1
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/img/
