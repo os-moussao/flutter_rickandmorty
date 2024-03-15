@@ -15,23 +15,35 @@ class CharactersScreen extends StatefulWidget {
 }
 
 class _CharactersScreenState extends State<CharactersScreen> {
-  late List<Character> _characters;
+  List<Character> _characters = [];
+  final scrollController = ScrollController();
+
+  void setupScrollController() {
+    scrollController.addListener(() {
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent) {
+        BlocProvider.of<CharactersCubit>(context).loadCharacters();
+      }
+    });
+  }
 
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<CharactersCubit>(context).getAll();
+    setupScrollController();
+    BlocProvider.of<CharactersCubit>(context).loadCharacters();
   }
 
   Widget buildLoadedList() {
     return GridView.builder(
-      itemCount: _characters.length,
+      controller: scrollController,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         childAspectRatio: 3 / 4,
         crossAxisSpacing: 20,
         mainAxisSpacing: 30,
       ),
+      itemCount: _characters.length,
       itemBuilder: (context, index) {
         return CharacterCard(_characters[index]);
       },
@@ -40,20 +52,23 @@ class _CharactersScreenState extends State<CharactersScreen> {
 
   Widget buildBlocWidget() {
     return BlocBuilder<CharactersCubit, CharactersState>(
+      // todo: handle error case
       builder: (context, state) {
-        if (state is CharactersLoaded) {
-          _characters = state.characters;
-          return RefreshIndicator(
-            onRefresh: () async {
-              // print('refresh');
-            },
-            child: buildLoadedList(),
-          );
-        } else {
-          return const SpinKitFadingCircle(
-            color: Colors.grey,
+        if (state is CharactersLoading && state.isFirstPage) {
+          return const Center(
+            child: SpinKitFadingCircle(
+              color: Colors.grey,
+            ),
           );
         }
+
+        if (state is CharactersLoading) {
+          _characters = state.oldCharacters;
+        } else if (state is CharactersLoaded) {
+          _characters = state.characters;
+        }
+
+        return buildLoadedList();
       },
     );
   }
