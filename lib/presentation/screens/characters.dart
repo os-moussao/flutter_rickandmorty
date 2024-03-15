@@ -35,18 +35,23 @@ class _CharactersScreenState extends State<CharactersScreen> {
   }
 
   Widget buildLoadedList() {
-    return GridView.builder(
+    return Scrollbar(
       controller: scrollController,
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        childAspectRatio: 3 / 4,
-        crossAxisSpacing: 20,
-        mainAxisSpacing: 30,
+      thickness: 5,
+      child: GridView.builder(
+        controller: scrollController,
+        padding: const EdgeInsets.symmetric(horizontal: 15),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          childAspectRatio: 3 / 4,
+          crossAxisSpacing: 20,
+          mainAxisSpacing: 30,
+        ),
+        itemCount: _characters.length,
+        itemBuilder: (context, index) {
+          return CharacterCard(_characters[index]);
+        },
       ),
-      itemCount: _characters.length,
-      itemBuilder: (context, index) {
-        return CharacterCard(_characters[index]);
-      },
     );
   }
 
@@ -81,7 +86,7 @@ class _CharactersScreenState extends State<CharactersScreen> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 20, 20, 5),
+          padding: const EdgeInsets.fromLTRB(5, 20, 5, 5),
           child: buildBlocWidget(),
         ),
       ),
