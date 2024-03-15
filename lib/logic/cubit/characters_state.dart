@@ -5,6 +5,8 @@ sealed class CharactersState {}
 
 final class CharactersInitial extends CharactersState {}
 
+class CharactersLoading extends CharactersState {}
+
 class CharactersLoaded extends CharactersState {
   final PaginatedCharacters characters;
 

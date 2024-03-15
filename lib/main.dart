@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_rickandmorty/app_router.dart';
 
 void main() {
@@ -17,6 +18,11 @@ class MainApp extends StatelessWidget {
       title: 'Rick And Morty',
       theme: ThemeData(
         useMaterial3: true,
+        brightness: Brightness.dark,
+        appBarTheme: AppBarTheme(
+          color: Colors.amberAccent[700],
+          foregroundColor: Colors.grey[900],
+        ),
       ),
       onGenerateRoute: appRouter.generateRoute,
     );
