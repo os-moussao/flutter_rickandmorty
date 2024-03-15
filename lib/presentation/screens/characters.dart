@@ -16,7 +16,6 @@ class CharactersScreen extends StatefulWidget {
 
 class _CharactersScreenState extends State<CharactersScreen> {
   late List<Character> _characters;
-  late Info _pageInfo;
 
   @override
   void initState() {
@@ -43,8 +42,7 @@ class _CharactersScreenState extends State<CharactersScreen> {
     return BlocBuilder<CharactersCubit, CharactersState>(
       builder: (context, state) {
         if (state is CharactersLoaded) {
-          _characters = state.characters.results;
-          _pageInfo = state.characters.info;
+          _characters = state.characters;
           return RefreshIndicator(
             onRefresh: () async {
               // print('refresh');

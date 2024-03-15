@@ -13,7 +13,7 @@ class CharactersCubit extends Cubit<CharactersState> {
   void getAll({int page = 1}) {
     emit(CharactersLoading());
     charactersRepository.getAll(page: page).then((charactersPage) {
-      emit(CharactersLoaded(charactersPage));
+      emit(CharactersLoaded(charactersPage.results));
     });
   }
 }
