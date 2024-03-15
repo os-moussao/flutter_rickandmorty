@@ -3,20 +3,16 @@ import 'package:flutter_rickandmorty/data/models/character.dart';
 import 'package:flutter_rickandmorty/data/repository/characters_repository.dart';
 import 'package:meta/meta.dart';
 
-part 'character_state.dart';
+part 'characters_state.dart';
 
-class CharacterCubit extends Cubit<CharacterState> {
+class CharactersCubit extends Cubit<CharactersState> {
   final CharactersRepository charactersRepository;
-  late PaginatedCharacters characters;
 
-  CharacterCubit(this.charactersRepository) : super(CharacterInitial());
+  CharactersCubit(this.charactersRepository) : super(CharactersInitial());
 
-  PaginatedCharacters getAll({int page = 1}) {
+  void getAll({int page = 1}) {
     charactersRepository.getAll(page: page).then((charactersPage) {
       emit(CharactersLoaded(charactersPage));
-      characters = charactersPage;
     });
-
-    return characters;
   }
 }
