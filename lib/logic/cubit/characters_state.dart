@@ -18,8 +18,9 @@ class CharactersLoading extends CharactersState {
 
 class CharactersLoaded extends CharactersState {
   final List<Character> characters;
+  final bool isLastPage;
 
-  CharactersLoaded(this.characters);
+  CharactersLoaded(this.characters, {this.isLastPage = false});
 }
 
 // todo: add error state

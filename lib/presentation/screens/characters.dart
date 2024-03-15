@@ -34,7 +34,7 @@ class _CharactersScreenState extends State<CharactersScreen> {
     BlocProvider.of<CharactersCubit>(context).loadCharacters();
   }
 
-  Widget buildLoadedList() {
+  Widget buildLoadedList({required bool showProgress}) {
     return Scrollbar(
       controller: scrollController,
       thickness: 5,
@@ -47,8 +47,15 @@ class _CharactersScreenState extends State<CharactersScreen> {
           crossAxisSpacing: 20,
           mainAxisSpacing: 30,
         ),
-        itemCount: _characters.length,
+        itemCount: _characters.length + (showProgress ? 2 : 0),
         itemBuilder: (context, index) {
+          if (index >= _characters.length) {
+            return const Center(
+              child: SpinKitFadingCircle(
+                color: Colors.grey,
+              ),
+            );
+          }
           return CharacterCard(_characters[index]);
         },
       ),
@@ -67,13 +74,15 @@ class _CharactersScreenState extends State<CharactersScreen> {
           );
         }
 
+        bool showProgress = true;
         if (state is CharactersLoading) {
           _characters = state.oldCharacters;
         } else if (state is CharactersLoaded) {
           _characters = state.characters;
+          showProgress = !state.isLastPage;
         }
 
-        return buildLoadedList();
+        return buildLoadedList(showProgress: showProgress);
       },
     );
   }

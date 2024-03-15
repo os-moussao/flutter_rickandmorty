@@ -7,7 +7,7 @@ part 'characters_state.dart';
 
 class CharactersCubit extends Cubit<CharactersState> {
   final CharactersRepository charactersRepository;
-  bool reachMaxPages = false;
+  bool isLastPage = false;
   int page = 1;
 
   CharactersCubit(this.charactersRepository) : super(CharactersInitial());
@@ -15,7 +15,7 @@ class CharactersCubit extends Cubit<CharactersState> {
   void loadCharacters() {
     final currentState = state;
 
-    if (currentState is CharactersLoading || reachMaxPages) return;
+    if (currentState is CharactersLoading || isLastPage) return;
 
     var oldCharacters = <Character>[];
 
@@ -33,9 +33,9 @@ class CharactersCubit extends Cubit<CharactersState> {
         ...newCharacters.results,
       ];
 
-      reachMaxPages = newCharacters.info.next == null;
+      isLastPage = newCharacters.info.next == null;
 
-      emit(CharactersLoaded(allCharacters));
+      emit(CharactersLoaded(allCharacters, isLastPage: isLastPage));
     });
   }
 }
