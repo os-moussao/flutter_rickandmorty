@@ -26,13 +26,12 @@ class _CharactersScreenState extends State<CharactersScreen> {
 
   Widget buildLoadedList() {
     return GridView.builder(
-      padding: const EdgeInsets.all(10),
       itemCount: _characters.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        childAspectRatio: 0.9,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
+        childAspectRatio: 3 / 4,
+        crossAxisSpacing: 20,
+        mainAxisSpacing: 30,
       ),
       itemBuilder: (context, index) {
         return CharacterCard(_characters[index]);
@@ -46,7 +45,12 @@ class _CharactersScreenState extends State<CharactersScreen> {
         if (state is CharactersLoaded) {
           _characters = state.characters.results;
           _pageInfo = state.characters.info;
-          return buildLoadedList();
+          return RefreshIndicator(
+            onRefresh: () async {
+              // print('refresh');
+            },
+            child: buildLoadedList(),
+          );
         } else {
           return const SpinKitFadingCircle(
             color: Colors.grey,
@@ -62,7 +66,12 @@ class _CharactersScreenState extends State<CharactersScreen> {
       appBar: AppBar(
         title: 'Characters'.text.make(),
       ),
-      body: buildBlocWidget(),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(20, 20, 20, 5),
+          child: buildBlocWidget(),
+        ),
+      ),
     );
   }
 }
