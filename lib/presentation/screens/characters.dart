@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rickandmorty/data/models/character.dart';
 import 'package:flutter_rickandmorty/logic/cubit/characters_cubit.dart';
 import 'package:flutter_rickandmorty/presentation/widgets/character_card.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class CharactersScreen extends StatefulWidget {
   const CharactersScreen({super.key});
@@ -15,10 +17,11 @@ class CharactersScreen extends StatefulWidget {
 
 class _CharactersScreenState extends State<CharactersScreen> {
   List<Character> _characters = [];
-  final _scrollController = ScrollController();
   List<Character> _searchedCharacters = [];
-  final _searchTextController = TextEditingController();
+  ScrollDirection _scrollDirection = ScrollDirection.idle; // no scrolling
   bool _isSearching = false;
+  final _scrollController = ScrollController();
+  final _searchTextController = TextEditingController();
 
   void setupScrollController() {
     _scrollController.addListener(() {
@@ -138,15 +141,30 @@ class _CharactersScreenState extends State<CharactersScreen> {
         // title: 'Characters'.text.make(),
         title: buildCharactersSearch(),
         shadowColor: Colors.grey,
-        scrolledUnderElevation: 10,
+        scrolledUnderElevation:
+            _scrollDirection == ScrollDirection.reverse ? 15 : 0,
         toolbarHeight: 75,
       ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(5, 0, 5, 5),
-          child: buildBlocWidget(),
+      body: NotificationListener<UserScrollNotification>(
+        onNotification: (notification) {
+          _scrollDirection = notification.direction;
+          setState(() {});
+          return true;
+        },
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(5, 0, 5, 5),
+            child: buildBlocWidget(),
+          ),
         ),
       ),
+      floatingActionButton: _scrollDirection == ScrollDirection.forward
+          ? FloatingActionButton.small(
+              backgroundColor: Colors.green,
+              foregroundColor: Colors.white,
+              onPressed: _scrollController.jumpToTop,
+              child: const Icon(Icons.arrow_upward))
+          : null,
     );
   }
 }
