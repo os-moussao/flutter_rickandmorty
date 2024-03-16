@@ -36,6 +36,13 @@ class _CharactersScreenState extends State<CharactersScreen> {
     BlocProvider.of<CharactersCubit>(context).loadCharacters();
   }
 
+  @override
+  void dispose() {
+    _searchTextController.dispose();
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   // void filterCharacters() {
   //   String query = _searchTextController.text.toLowerCase();
   //   _isSearching = true;
