@@ -77,26 +77,28 @@ class _CharactersScreenState extends State<CharactersScreen> {
     return Scrollbar(
       controller: _scrollController,
       thickness: 5,
-      child: GridView.builder(
-        controller: _scrollController,
-        padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          childAspectRatio: 5 / 6,
-          crossAxisSpacing: 20,
-          mainAxisSpacing: 30,
+      child: OrientationBuilder(
+        builder: (_, orientation) => GridView.builder(
+          controller: _scrollController,
+          padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: orientation == Orientation.portrait ? 2 : 3,
+            childAspectRatio: orientation == Orientation.portrait ? 5 / 6 : 1,
+            crossAxisSpacing: 20,
+            mainAxisSpacing: 30,
+          ),
+          itemCount: displayCharacters.length + (showProgress ? 2 : 0),
+          itemBuilder: (context, index) {
+            if (index >= displayCharacters.length) {
+              return const Center(
+                child: SpinKitFadingCircle(
+                  color: Colors.grey,
+                ),
+              );
+            }
+            return CharacterCard(displayCharacters[index]);
+          },
         ),
-        itemCount: displayCharacters.length + (showProgress ? 2 : 0),
-        itemBuilder: (context, index) {
-          if (index >= displayCharacters.length) {
-            return const Center(
-              child: SpinKitFadingCircle(
-                color: Colors.grey,
-              ),
-            );
-          }
-          return CharacterCard(displayCharacters[index]);
-        },
       ),
     );
   }
