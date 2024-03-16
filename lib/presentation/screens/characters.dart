@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rickandmorty/data/models/character.dart';
 import 'package:flutter_rickandmorty/logic/cubit/characters_cubit.dart';
 import 'package:flutter_rickandmorty/presentation/widgets/character_card.dart';
+import 'package:flutter_rickandmorty/presentation/widgets/characters_search_bar.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -58,26 +59,12 @@ class _CharactersScreenState extends State<CharactersScreen> {
   // }
 
   Widget buildCharactersSearch() {
-    return TextField(
+    return CharactersSearchBar(
       controller: _searchTextController,
-      keyboardType: TextInputType.text,
-      cursorColor: Colors.grey[900],
-      decoration: InputDecoration(
-        hintText: 'Find a character...',
-        hintStyle: TextStyle(
-          color: Colors.grey[900],
-          fontSize: 18,
-        ),
-        border: InputBorder.none,
-        filled: true,
-        fillColor: Colors.amber,
-        contentPadding: const EdgeInsets.all(10),
-      ),
-      style: const TextStyle(
-        fontSize: 20,
-        color: Colors.black,
-      ),
-      // onChanged: () {},
+      onClosed: () {},
+      onChanged: (_) {
+        print(_);
+      },
     );
   }
 
