@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rickandmorty/data/models/character.dart';
 import 'package:flutter_rickandmorty/presentation/screens/character_details.dart';
-import 'package:velocity_x/velocity_x.dart';
+import 'package:flutter_rickandmorty/presentation/widgets/character_name_decoration.dart';
 
 class CharacterCard extends StatelessWidget {
   final Character _character;
@@ -22,36 +22,9 @@ class CharacterCard extends StatelessWidget {
     );
   }
 
-  Widget displayCharacterData() {
-    return Container(
-      // color: Colors.black54,
-      padding: const EdgeInsets.only(top: 15),
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Colors.black54,
-            Colors.black45,
-            Colors.black12,
-            Colors.transparent
-          ],
-          begin: Alignment.bottomCenter,
-          end: Alignment.topCenter,
-          stops: [0.5, 0.7, 0.9, 1],
-        ),
-      ),
-      child: _character.name.text.center.white
-          .size(16)
-          .lineHeight(1.3)
-          .maxLines(2)
-          .overflow(TextOverflow.ellipsis)
-          .make()
-          .p(5),
-    );
-  }
-
   Widget displayCardData() {
     return GridTile(
-      footer: displayCharacterData(),
+      footer: CharacterNameDecoration(name: _character.name),
       child: loadCharacterImage(),
     );
   }
