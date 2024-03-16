@@ -32,7 +32,7 @@ class CharactersSearchBar extends StatelessWidget {
             width: 0,
             style: BorderStyle.none,
           ),
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(40),
         ),
         prefix: IconButton(
           icon: const Icon(Icons.arrow_back),

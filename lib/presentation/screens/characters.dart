@@ -17,7 +17,7 @@ class CharactersScreen extends StatefulWidget {
 }
 
 class _CharactersScreenState extends State<CharactersScreen> {
-  List<Character> _characters = [];
+  List<Character> _allCharacters = [];
   List<Character> _searchedCharacters = [];
   ScrollDirection _scrollDirection = ScrollDirection.idle; // no scrolling
   bool _isSearching = false;
@@ -27,7 +27,8 @@ class _CharactersScreenState extends State<CharactersScreen> {
   void setupScrollController() {
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
-          _scrollController.position.maxScrollExtent) {
+              _scrollController.position.maxScrollExtent &&
+          !_isSearching) {
         BlocProvider.of<CharactersCubit>(context).loadCharacters();
       }
     });
@@ -47,28 +48,31 @@ class _CharactersScreenState extends State<CharactersScreen> {
     super.dispose();
   }
 
-  // void filterCharacters() {
-  //   String query = _searchTextController.text.toLowerCase();
-  //   _isSearching = true;
-  //   _searchedCharacters = _characters.filter((character) {
-  //     String name = character.name.toLowerCase();
-  //     return name.startsWith(query);
-  //   }).toList();
+  void filterCharacters(String query) {
+    _searchedCharacters = _allCharacters.filter((character) {
+      String name = character.name.toLowerCase();
+      return name.contains(query.toLowerCase());
+    }).toList();
 
-  //   setState(() {});
-  // }
+    setState(() {});
+  }
 
   Widget buildCharactersSearch() {
     return CharactersSearchBar(
       controller: _searchTextController,
-      onClosed: () {},
-      onChanged: (_) {
-        print(_);
+      onClosed: () {
+        setState(() {
+          _searchTextController.clear();
+          _isSearching = false;
+        });
       },
+      onChanged: filterCharacters,
     );
   }
 
   Widget buildLoadedList({required bool showProgress}) {
+    final displayCharacters = _isSearching ? _searchedCharacters : _allCharacters;
+
     return Scrollbar(
       controller: _scrollController,
       thickness: 5,
@@ -81,16 +85,16 @@ class _CharactersScreenState extends State<CharactersScreen> {
           crossAxisSpacing: 20,
           mainAxisSpacing: 30,
         ),
-        itemCount: _characters.length + (showProgress ? 2 : 0),
+        itemCount: displayCharacters.length + (showProgress ? 2 : 0),
         itemBuilder: (context, index) {
-          if (index >= _characters.length) {
+          if (index >= displayCharacters.length) {
             return const Center(
               child: SpinKitFadingCircle(
                 color: Colors.grey,
               ),
             );
           }
-          return CharacterCard(_characters[index]);
+          return CharacterCard(displayCharacters[index]);
         },
       ),
     );
@@ -110,10 +114,10 @@ class _CharactersScreenState extends State<CharactersScreen> {
 
         bool showProgress = true;
         if (state is CharactersLoading) {
-          _characters = state.oldCharacters;
+          _allCharacters = state.oldCharacters;
         } else if (state is CharactersLoaded) {
-          _characters = state.characters;
-          showProgress = !state.isLastPage;
+          _allCharacters = state.characters;
+          showProgress = !state.isLastPage && !_isSearching;
         }
 
         return buildLoadedList(showProgress: showProgress);
@@ -125,8 +129,8 @@ class _CharactersScreenState extends State<CharactersScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // title: 'Characters'.text.make(),
-        title: buildCharactersSearch(),
+        title: buildAppBarTitle(),
+        actions: buildAppBarActions(),
         shadowColor: Colors.grey,
         scrolledUnderElevation:
             _scrollDirection == ScrollDirection.reverse ? 15 : 0,
@@ -154,4 +158,25 @@ class _CharactersScreenState extends State<CharactersScreen> {
           : null,
     );
   }
+
+  List<Widget> buildAppBarActions() {
+    if (_isSearching) return [];
+    return [
+      Container(
+        margin: const EdgeInsets.only(right: 15),
+        child: IconButton(
+          onPressed: () {
+            setState(() {
+              _isSearching = true;
+              _searchedCharacters = _allCharacters;
+            });
+          },
+          icon: const Icon(Icons.search),
+        ),
+      ),
+    ];
+  }
+
+  Widget buildAppBarTitle() =>
+      _isSearching ? buildCharactersSearch() : 'Characters'.text.make();
 }
