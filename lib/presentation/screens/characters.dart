@@ -71,7 +71,8 @@ class _CharactersScreenState extends State<CharactersScreen> {
   }
 
   Widget buildLoadedList({required bool showProgress}) {
-    final displayCharacters = _isSearching ? _searchedCharacters : _allCharacters;
+    final displayCharacters =
+        _isSearching ? _searchedCharacters : _allCharacters;
 
     return Scrollbar(
       controller: _scrollController,
@@ -134,7 +135,7 @@ class _CharactersScreenState extends State<CharactersScreen> {
         shadowColor: Colors.grey,
         scrolledUnderElevation:
             _scrollDirection == ScrollDirection.reverse ? 15 : 0,
-        toolbarHeight: 75,
+        toolbarHeight: 70,
       ),
       body: NotificationListener<UserScrollNotification>(
         onNotification: (notification) {
