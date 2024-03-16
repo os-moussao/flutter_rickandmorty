@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rickandmorty/data/models/character.dart';
+import 'package:flutter_rickandmorty/presentation/screens/character_details.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class CharacterCard extends StatelessWidget {
@@ -57,14 +58,26 @@ class CharacterCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // color: Colors.grey,
-      decoration: BoxDecoration(
-        color: const Color.fromARGB(19, 158, 158, 158),
-        borderRadius: BorderRadius.circular(12),
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).pushNamed(
+          CharacterDetailsScreen.routeName,
+          arguments: _character,
+        );
+      },
+      child: Container(
+        // color: Colors.grey,
+        decoration: BoxDecoration(
+          color: const Color.fromARGB(19, 158, 158, 158),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        // for the child to inherit the border radius
+        clipBehavior: Clip.hardEdge,
+        child: Hero(
+          tag: _character.id,
+          child: displayCardData(),
+        ),
       ),
-      clipBehavior: Clip.hardEdge, // for the child to inherit the border radius
-      child: displayCardData(),
     );
   }
 }
