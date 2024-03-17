@@ -6,6 +6,7 @@ import 'package:flutter_rickandmorty/data/models/character.dart';
 import 'package:flutter_rickandmorty/logic/cubit/characters_cubit.dart';
 import 'package:flutter_rickandmorty/presentation/widgets/character_card.dart';
 import 'package:flutter_rickandmorty/presentation/widgets/characters_search_bar.dart';
+import 'package:flutter_rickandmorty/presentation/widgets/offline_builder_wrapper.dart';
 import 'package:flutter_rickandmorty/presentation/widgets/offline_mode.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -130,30 +131,21 @@ class _CharactersScreenState extends State<CharactersScreen> {
     );
   }
 
-  OfflineBuilder buildScreenBody() {
-    return OfflineBuilder(
-      connectivityBuilder: (context, connectivity, child) {
-        final isOffline = connectivity == ConnectivityResult.none;
-
-        if (isOffline) {
-          return const OfflineMode();
-        } else {
-          return NotificationListener<UserScrollNotification>(
-            onNotification: (notification) {
-              _scrollDirection = notification.direction;
-              setState(() {});
-              return true;
-            },
-            child: SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(5, 0, 5, 5),
-                child: buildBlocWidget(),
-              ),
-            ),
-          );
-        }
-      },
-      child: Container(),
+  Widget buildScreenBody() {
+    return OfflineBuilderWrapper(
+      onlineMode: NotificationListener<UserScrollNotification>(
+        onNotification: (notification) {
+          _scrollDirection = notification.direction;
+          setState(() {});
+          return true;
+        },
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(5, 0, 5, 5),
+            child: buildBlocWidget(),
+          ),
+        ),
+      ),
     );
   }
 
