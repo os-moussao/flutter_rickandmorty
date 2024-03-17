@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_offline/flutter_offline.dart';
-import 'package:flutter_rickandmorty/data/models/character.dart';
-import 'package:flutter_rickandmorty/logic/cubit/characters_cubit.dart';
-import 'package:flutter_rickandmorty/presentation/widgets/character_card.dart';
-import 'package:flutter_rickandmorty/presentation/widgets/characters_search_bar.dart';
-import 'package:flutter_rickandmorty/presentation/widgets/offline_builder_wrapper.dart';
-import 'package:flutter_rickandmorty/presentation/widgets/offline_mode.dart';
+import '../../data/models/character.dart';
+import '../../logic/cubit/characters_cubit.dart';
+import '../widgets/character_card.dart';
+import '../widgets/characters_search_bar.dart';
+import '../widgets/offline_builder_wrapper.dart';
+import '../widgets/offline_mode.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:velocity_x/velocity_x.dart';
 

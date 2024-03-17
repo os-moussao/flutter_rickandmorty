@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter_rickandmorty/data/models/character.dart';
-import 'package:flutter_rickandmorty/data/repository/characters_repository.dart';
+import '../../data/models/character.dart';
+import '../../data/repository/characters_repository.dart';
 import 'package:meta/meta.dart';
 
 part 'characters_state.dart';

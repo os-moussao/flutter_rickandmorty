@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_rickandmorty/data/models/character.dart';
-import 'package:flutter_rickandmorty/presentation/screens/character_details.dart';
-import 'package:flutter_rickandmorty/presentation/widgets/character_name_decoration.dart';
+import '../../data/models/character.dart';
+import '../screens/character_details.dart';
+import 'character_name_decoration.dart';
 
 class CharacterCard extends StatelessWidget {
   final Character _character;

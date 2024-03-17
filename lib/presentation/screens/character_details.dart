@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_rickandmorty/data/models/character.dart';
-import 'package:flutter_rickandmorty/presentation/widgets/character_name_decoration.dart';
+import '../../data/models/character.dart';
+import '../widgets/character_name_decoration.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class CharacterDetailsScreen extends StatelessWidget {

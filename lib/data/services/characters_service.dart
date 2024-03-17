@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_rickandmorty/common/constants.dart';
+import '../../common/constants.dart';
 
 class CharactersService {
   late Dio dio;

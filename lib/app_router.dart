@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_offline/flutter_offline.dart';
-import 'package:flutter_rickandmorty/data/models/character.dart';
-import 'package:flutter_rickandmorty/data/repository/characters_repository.dart';
-import 'package:flutter_rickandmorty/data/services/characters_service.dart';
-import 'package:flutter_rickandmorty/logic/cubit/characters_cubit.dart';
-import 'package:flutter_rickandmorty/presentation/screens/character_details.dart';
-import 'package:flutter_rickandmorty/presentation/screens/characters.dart';
-import 'package:flutter_rickandmorty/presentation/widgets/offline_builder_wrapper.dart';
-import 'package:flutter_rickandmorty/presentation/widgets/offline_mode.dart';
+import 'data/models/character.dart';
+import 'data/repository/characters_repository.dart';
+import 'data/services/characters_service.dart';
+import 'logic/cubit/characters_cubit.dart';
+import 'presentation/screens/character_details.dart';
+import 'presentation/screens/characters.dart';
+import 'presentation/widgets/offline_builder_wrapper.dart';
+import 'presentation/widgets/offline_mode.dart';
 
 class AppRouter {
   late CharactersRepository charactersRepository;

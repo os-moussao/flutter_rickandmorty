@@ -1,5 +1,5 @@
-import 'package:flutter_rickandmorty/data/models/character.dart';
-import 'package:flutter_rickandmorty/data/services/characters_service.dart';
+import '../models/character.dart';
+import '../services/characters_service.dart';
 
 class CharactersRepository {
   final CharactersService charactersService;

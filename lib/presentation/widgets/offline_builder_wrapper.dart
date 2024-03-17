@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
-import 'package:flutter_rickandmorty/presentation/widgets/offline_mode.dart';
+import 'offline_mode.dart';
 
 class OfflineBuilderWrapper extends StatelessWidget {
   const OfflineBuilderWrapper({
