@@ -17,6 +17,7 @@ class CharactersSearchBar extends StatelessWidget {
     return TextField(
       controller: controller,
       keyboardType: TextInputType.text,
+      autofocus: true,
       cursorColor: Colors.grey[900],
       decoration: InputDecoration(
         hintText: 'Find a character...',
