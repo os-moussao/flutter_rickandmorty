@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_offline/flutter_offline.dart';
 import 'package:flutter_rickandmorty/data/models/character.dart';
 import 'package:flutter_rickandmorty/logic/cubit/characters_cubit.dart';
 import 'package:flutter_rickandmorty/presentation/widgets/character_card.dart';
@@ -139,26 +140,56 @@ class _CharactersScreenState extends State<CharactersScreen> {
             _scrollDirection == ScrollDirection.reverse ? 15 : 0,
         toolbarHeight: 70,
       ),
-      body: NotificationListener<UserScrollNotification>(
-        onNotification: (notification) {
-          _scrollDirection = notification.direction;
-          setState(() {});
-          return true;
-        },
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(5, 0, 5, 5),
-            child: buildBlocWidget(),
-          ),
-        ),
-      ),
+      body: buildScreenBody(),
       floatingActionButton: _scrollDirection == ScrollDirection.forward
           ? FloatingActionButton.small(
               backgroundColor: Colors.green,
               foregroundColor: Colors.white,
               onPressed: _scrollController.jumpToTop,
-              child: const Icon(Icons.arrow_upward))
+              child: const Icon(Icons.arrow_upward),
+            )
           : null,
+    );
+  }
+
+  OfflineBuilder buildScreenBody() {
+    return OfflineBuilder(
+      connectivityBuilder: (context, connectivity, child) {
+        final isOffline = connectivity == ConnectivityResult.none;
+
+        if (isOffline) {
+          return Container(
+            color: const Color(0xFFEE4400),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                'Please check your internet connection  '.text.size(15).make(),
+                Transform.scale(
+                  scale: 0.6,
+                  child: const CircularProgressIndicator(
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ).py(10),
+          );
+        } else {
+          return NotificationListener<UserScrollNotification>(
+            onNotification: (notification) {
+              _scrollDirection = notification.direction;
+              setState(() {});
+              return true;
+            },
+            child: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(5, 0, 5, 5),
+                child: buildBlocWidget(),
+              ),
+            ),
+          );
+        }
+      },
+      child: Container(),
     );
   }
 
