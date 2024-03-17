@@ -7,6 +7,7 @@ import 'package:flutter_rickandmorty/logic/cubit/characters_cubit.dart';
 import 'package:flutter_rickandmorty/presentation/widgets/character_card.dart';
 import 'package:flutter_rickandmorty/presentation/widgets/characters_search_bar.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:lottie/lottie.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class CharactersScreen extends StatefulWidget {
@@ -158,20 +159,28 @@ class _CharactersScreenState extends State<CharactersScreen> {
         final isOffline = connectivity == ConnectivityResult.none;
 
         if (isOffline) {
-          return Container(
-            color: const Color(0xFFEE4400),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                'Please check your internet connection  '.text.size(15).make(),
-                Transform.scale(
-                  scale: 0.6,
-                  child: const CircularProgressIndicator(
-                    color: Colors.white,
-                  ),
-                ),
-              ],
-            ).py(10),
+          return Stack(
+            children: [
+              Container(
+                color: const Color(0xFFEE4400),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    'Please check your internet connection  '
+                        .text
+                        .size(15)
+                        .make(),
+                    Transform.scale(
+                      scale: 0.6,
+                      child: const CircularProgressIndicator(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ).py(10),
+              ),
+              Lottie.asset('assets/animation/sad_morty.json').centered(),
+            ],
           );
         } else {
           return NotificationListener<UserScrollNotification>(
