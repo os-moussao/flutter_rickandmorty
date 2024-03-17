@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../data/models/character.dart';
 import '../screens/character_details.dart';
 import 'character_name_decoration.dart';

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+
 import '../../common/constants.dart';
 
 class CharactersService {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_offline/flutter_offline.dart';
+
 import 'data/models/character.dart';
 import 'data/repository/characters_repository.dart';
 import 'data/services/characters_service.dart';

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:velocity_x/velocity_x.dart';
+
 import '../../data/models/character.dart';
 import '../widgets/character_name_decoration.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 class CharacterDetailsScreen extends StatelessWidget {
   const CharacterDetailsScreen({super.key, required this.character});

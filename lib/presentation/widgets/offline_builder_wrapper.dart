@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
+
 import 'offline_mode.dart';
 
 class OfflineBuilderWrapper extends StatelessWidget {
