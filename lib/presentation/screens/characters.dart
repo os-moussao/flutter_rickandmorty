@@ -130,29 +130,6 @@ class _CharactersScreenState extends State<CharactersScreen> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: buildAppBarTitle(),
-        actions: buildAppBarActions(),
-        shadowColor: Colors.grey,
-        scrolledUnderElevation:
-            _scrollDirection == ScrollDirection.reverse ? 15 : 0,
-        toolbarHeight: 70,
-      ),
-      body: buildScreenBody(),
-      floatingActionButton: _scrollDirection == ScrollDirection.forward
-          ? FloatingActionButton.small(
-              backgroundColor: Colors.green,
-              foregroundColor: Colors.white,
-              onPressed: _scrollController.jumpToTop,
-              child: const Icon(Icons.arrow_upward),
-            )
-          : null,
-    );
-  }
-
   OfflineBuilder buildScreenBody() {
     return OfflineBuilder(
       connectivityBuilder: (context, connectivity, child) {
@@ -198,6 +175,30 @@ class _CharactersScreenState extends State<CharactersScreen> {
     ];
   }
 
-  Widget buildAppBarTitle() =>
-      _isSearching ? buildCharactersSearch() : 'Characters'.text.make();
+  Widget buildAppBarTitle() {
+    return _isSearching ? buildCharactersSearch() : 'Characters'.text.make();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: buildAppBarTitle(),
+        actions: buildAppBarActions(),
+        shadowColor: Colors.grey,
+        scrolledUnderElevation:
+            _scrollDirection == ScrollDirection.reverse ? 15 : 0,
+        toolbarHeight: 70,
+      ),
+      body: buildScreenBody(),
+      floatingActionButton: _scrollDirection == ScrollDirection.forward
+          ? FloatingActionButton.small(
+              backgroundColor: Colors.green,
+              foregroundColor: Colors.white,
+              onPressed: _scrollController.jumpToTop,
+              child: const Icon(Icons.arrow_upward),
+            )
+          : null,
+    );
+  }
 }
